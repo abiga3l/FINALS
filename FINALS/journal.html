@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<head lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>JOURNALING</title>
+        <style>
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #e8f5ea;
+            margin:0;
+            padding:0;
+          display:flex;
+          justify-content:center;
+          align-items:center;
+          height:100vh;
+        }
+        #journaling{
+          background-color:white;
+          padding:20px;
+          border-radius:8px;
+          box-shadow:0 0 10px rgba(0,0,0,0.1);
+          text-align:center;
+        }
+        h1{
+            color:black;
+            padding:0;
+            text-align:center;
+          font-size:30px;
+        }
+        textarea{
+            width:100%;
+          max-width:800px;
+          padding:10px;
+          border:1px solid #b2dfbd;
+          border-radius:4px;
+          font-size:16px;
+        }
+        button{
+          background-color:#4caf50;
+            color:white;
+          border:none;
+          padding:10px 20px;
+          border-radius:5px;
+          cursor:pointer;
+          font-size:16px;
+        }
+        button:hover{
+          background-color:#4caf50;
+        }
+    </style>
+    </head>
+      <body>
+<section id="journaling">
+    <h1>Jornaling</h1>
+    <p>Let's Journal.Only for you</p>
+    <form id="journal-form" method="post" action="journal.php">
+    <textarea id="journal-entry" placeholder="Write your emotions here..." rows="10"cols="150">
+    </textarea>
+    <br>
+    <button onclick="saveEntry()">Save Entry</button>
+</form>
+</section>
+<script>
+document.getElementById('journal-form').onsubmit =function(event){
+    event.preventDefault();
+    var xhr=new XMLHttpRequest();
+    xhr.open('POST','journal.php',true);
+    xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+    xhr.onreadystatechange =function(){
+        if (xhr.readyState === 4 && xhr.status === 200){
+            alert(xhr.responseText);
+        if(xhr.responseText === 'Entry saved successfully!'){
+            document.getElementById('journal-entry') .value='';
+        }
+    }
+};
+var entry =document.getElementById('journal-entry').values;
+xhr.send('entry='+encodeURIComponent(entry));
+};
+</script>
+      </body>
+      </html>
